@@ -4,13 +4,13 @@ sh dnsmasq_gfwlist.sh -o dnsmasq_gfwlist.conf
 cp -f dnsmasq_gfwlist.conf smartdns_gfwlist.conf
 sed -i 's/server=/nameserver\ /g' smartdns_gfwlist.conf
 sed -i 's/127.0.0.1#5353/gfwlist/g' smartdns_gfwlist.conf
-cat addon_domain | while read addLine; do
+while IFS= read -r addLine || [[ -n "$addLine" ]]; do
   echo "nameserver /$addLine/gfwlist" >>smartdns_gfwlist.conf
-done
+done < addon_domain
 
-cat delete_domain | while read deleteLine; do
+while IFS= read -r deleteLine || [[ -n "$deleteLine" ]]; do
   sed -i "/$deleteLine/d" smartdns_gfwlist.conf
-done
+done < delete_domain
 
 git add .
 git commit -m 'update'
