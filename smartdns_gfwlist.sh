@@ -24,10 +24,7 @@ if [[ -f domain/exclude_domain.txt ]]; then
 fi
 
 # 提交并推送更改
-git add .
-git commit -m 'update'
-git push
-git push -f https://gitee.com/hz-liujiawei/gfw2dnsmasq.git master
+sh push_git.sh
 
 # 更新并重启smartdns
 cp -f smartdns_gfwlist.conf /etc/smartdns/smartdns_gfwlist.conf
