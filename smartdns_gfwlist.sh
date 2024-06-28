@@ -1,5 +1,6 @@
 #! /bin/bash
 
+git pull
 sh dnsmasq_gfwlist.sh -o dnsmasq_gfwlist.conf
 cp -f dnsmasq_gfwlist.conf smartdns_gfwlist.conf
 sed -i 's/server=/nameserver\ /g' smartdns_gfwlist.conf
