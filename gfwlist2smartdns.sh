@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 sh dnsmasq_gfwlist.sh -o dnsmasq_gfwlist.conf
 cp -f dnsmasq_gfwlist.conf smartdns_gfwlist.conf
