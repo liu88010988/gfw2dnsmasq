@@ -14,5 +14,6 @@ git add .
 git commit -m 'update'
 git push
 git push -f https://gitee.com/hz-liujiawei/gfw2dnsmasq.git master
+cp -f smartdns_gfwlist.conf /etc/smartdns/smartdns_gfwlist.conf
 #echo 'restart smartdns'
 #systemctl restart smartdns
