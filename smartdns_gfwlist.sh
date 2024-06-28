@@ -10,14 +10,18 @@ sed -i 's/server=/nameserver\ /g' smartdns_gfwlist.conf
 sed -i 's/127.0.0.1#5353/gfwlist/g' smartdns_gfwlist.conf
 
 # 添加额外的域名
-while IFS= read -r addLine || [[ -n "$addLine" ]]; do
-  echo "nameserver /$addLine/gfwlist" >>smartdns_gfwlist.conf
-done <domain/additional_domain.txt
+if [[ -f domain/additional_domain.txt ]]; then
+  while IFS= read -r addLine || [[ -n "$addLine" ]]; do
+    echo "nameserver /$addLine/gfwlist" >>smartdns_gfwlist.conf
+  done <domain/additional_domain.txt
+fi
 
 # 删除排除的域名
-while IFS= read -r deleteLine || [[ -n "$deleteLine" ]]; do
-  sed -i "/$deleteLine/d" smartdns_gfwlist.conf
-done <domain/exclude_domain.txt
+if [[ -f domain/exclude_domain.txt ]]; then
+  while IFS= read -r deleteLine || [[ -n "$deleteLine" ]]; do
+    sed -i "/$deleteLine/d" smartdns_gfwlist.conf
+  done <domain/exclude_domain.txt
+fi
 
 # 提交并推送更改
 git add .
