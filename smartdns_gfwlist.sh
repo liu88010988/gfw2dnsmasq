@@ -13,7 +13,7 @@ sed -i "s/127.0.0.1#5353/$group/g" smartdns_gfwlist.conf
 # 添加额外的域名
 if [[ -f domain/additional_domain.txt ]]; then
   while IFS= read -r additional || [[ -n "$additional" ]]; do
-    echo "nameserver /$additional/gfwlist" >>smartdns_gfwlist.conf
+    echo "nameserver /$additional/$group" >>smartdns_gfwlist.conf
   done <domain/additional_domain.txt
 fi
 
