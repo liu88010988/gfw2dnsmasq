@@ -1,10 +1,14 @@
 #! /bin/bash
 
+group=$1
+if [ -z "$group" ]; then
+  group=gfwlist
+fi
 # 生成并处理dnsmasq_gfwlist.conf
 sh dnsmasq_gfwlist.sh -o dnsmasq_gfwlist.conf
 cp -f dnsmasq_gfwlist.conf smartdns_gfwlist.conf
 sed -i 's/server=/nameserver\ /g' smartdns_gfwlist.conf
-sed -i 's/127.0.0.1#5353/gfwlist/g' smartdns_gfwlist.conf
+sed -i "s/127.0.0.1#5353/$group/g" smartdns_gfwlist.conf
 
 # 添加额外的域名
 if [[ -f domain/additional_domain.txt ]]; then
