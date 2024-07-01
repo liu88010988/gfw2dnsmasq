@@ -1,8 +1,5 @@
 #! /bin/bash
 
-# 更新代码库
-git pull
-
 # 生成并处理dnsmasq_gfwlist.conf
 sh dnsmasq_gfwlist.sh -o dnsmasq_gfwlist.conf
 cp -f dnsmasq_gfwlist.conf smartdns_gfwlist.conf
@@ -22,9 +19,6 @@ if [[ -f domain/exclude_domain.txt ]]; then
     sed -i "/$exclude/d" smartdns_gfwlist.conf
   done <domain/exclude_domain.txt
 fi
-
-# 提交并推送更改
-sh push_git.sh
 
 # 更新并重启smartdns
 cp -f smartdns_gfwlist.conf /etc/smartdns/smartdns_gfwlist.conf
