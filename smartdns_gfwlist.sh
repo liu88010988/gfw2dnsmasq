@@ -4,6 +4,7 @@ group=$1
 if [ -z "$group" ]; then
   group=gfwlist
 fi
+echo "use smartdns group $group"
 
 # 生成并处理dnsmasq_gfwlist.conf
 sh dnsmasq_gfwlist.sh -o dnsmasq_gfwlist.conf
