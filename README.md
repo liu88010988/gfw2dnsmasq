@@ -3,7 +3,7 @@
 ```sh
 sh dnsmasq_gfwlist.sh -o dnsmasq_gfwlist.conf
 ```
-## 转换成smartdns格式,后面传入smartdns的国外解析分组名，不传默认为gfwlist
+## 转换成smartdns格式，后面传入smartdns的国外解析分组名，不传默认为gfwlist
 ```sh
 sh smartdns_gfwlist.sh $group_name
 ```
