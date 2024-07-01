@@ -27,6 +27,6 @@ if [[ -f domain/exclude_domain.txt ]]; then
 fi
 
 # 更新并重启smartdns
-#cp -f smartdns_gfwlist.conf /etc/smartdns/smartdns_gfwlist.conf
-#echo 'restart smartdns'
-#systemctl restart smartdns
+cp -f smartdns_gfwlist.conf /etc/smartdns/smartdns_gfwlist.conf
+echo 'restart smartdns'
+systemctl restart smartdns
