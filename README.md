@@ -5,7 +5,7 @@ sh dnsmasq_gfwlist.sh -o dnsmasq_gfwlist.conf
 ```
 ## 转换成smartdns格式,后面传入smartdns的国外解析分组名，不传默认为gfwlist
 ```sh
-sh smartdns_gfwlist.sh $gfwlist
+sh smartdns_gfwlist.sh $group_name
 ```
 ## 自定义的额外gfw域名可以加到domain/additional_domain.txt中
 ## 自定义的非gfw域名可以加到domain/exclude_domain.txt中
