@@ -36,21 +36,39 @@ plugins:
       files:
         - "/etc/mosdns/hosts"
 
-  # china ip
-  - tag: china_ip
+  # 国内域名
+  - tag: geosite_cn
+    type: domain_set
+    args:
+      exps:
+        - "lan"
+        - "local"
+        - "arpa"
+      files:
+        - "/etc/mosdns/direct-list.txt"
+        - "/etc/mosdns/apple-cn.txt"
+
+  # 国内ip
+  - tag: geoip_cn
     type: ip_set
     args:
       files:
-        - /etc/mosdns/china-ip-list.txt
+        - "/etc/mosdns/china-ip-list.txt"
+
+  # 国外域名
+  - tag: geosite_no_cn
+    type: domain_set
+    args:
+      files:
+        - "/etc/mosdns/proxy-list.txt"
 
   # fallback的primary服务器,返回非国内ip则drop_resp
   - tag: local_sequence
     type: sequence
     args:
       - exec: $forward_local
-      - matches: "resp_ip $china_ip"
-        exec: accept
-      - exec: drop_resp
+      - matches: "!resp_ip geoip_cn"
+        exec: drop_resp
 
   # fallback的secondary服务器
   - tag: remote_sequence
@@ -66,7 +84,7 @@ plugins:
     args:
       primary: local_sequence
       secondary: remote_sequence
-      threshold: 500
+      threshold: 200
       always_standby: true
 
   # 主运行序列
@@ -82,12 +100,12 @@ plugins:
 
       - exec: prefer_ipv4
 
-      - matches: qname &/etc/mosdns/direct-list.txt &/etc/mosdns/apple-cn.txt
+      - matches: qname $geosite_cn
         exec: $forward_local
       - matches: has_resp
         exec: accept
 
-      - matches: qname &/etc/mosdns/proxy-list.txt
+      - matches: qname $geosite_no_cn
         exec: $forward_remote
       - matches: has_resp
         exec: accept
