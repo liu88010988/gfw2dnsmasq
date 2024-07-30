@@ -1,40 +1,52 @@
-#! /bin/bash
+#!/bin/bash
 
+# 定义工作目录
 work_dir="/etc/mosdns"
 
-if [ ! -d "$work_dir" ]; then
-  mkdir -p "$work_dir"
-fi
+# 创建工作目录（如果不存在）
+mkdir -p "$work_dir"
 
-# 配置文件拷贝
-curl -L https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/cn.txt -o ip/geoip_cn.txt
-cp -f ip/geoip_cn.txt "$work_dir"
+# 配置文件的URL和本地路径
+declare -A files=(
+  ["https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/cn.txt"]="ip/geoip_cn.txt"
+  ["https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/apple-cn.txt"]="domain/apple-cn.txt"
+  ["https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt"]="domain/direct-list.txt"
+  ["https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt"]="domain/proxy-list.txt"
+)
 
-curl -L https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/apple-cn.txt -o domain/apple-cn.txt
-cp -f domain/apple-cn.txt "$work_dir"
+# 下载并复制配置文件
+for url in "${!files[@]}"; do
+  local_path="${files[$url]}"
+  echo "正在下载 $url 到 $local_path"
+  curl -s -L "$url" -o "$local_path" || { echo "下载失败: $url"; exit 1; }
+  cp -f "$local_path" "$work_dir"
+done
 
-curl -L https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt -o domain/direct-list.txt
-cp -f domain/direct-list.txt "$work_dir"
-
-curl -L https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt -o domain/proxy-list.txt
 # 删除排除的域名
-if [[ -f domain/exclude_domain.txt ]]; then
+exclude_file="domain/exclude_domain.txt"
+if [[ -f $exclude_file ]]; then
+  echo "删除排除的域名..."
   while IFS= read -r exclude || [[ -n "$exclude" ]]; do
-    sed -i "/$exclude/d" domain/proxy-list.txt
-  done <domain/exclude_domain.txt
+    sed -i "/$exclude/d" "domain/proxy-list.txt"
+  done <"$exclude_file"
+  cp -f "domain/proxy-list.txt" "$work_dir"
 fi
-cp -f domain/proxy-list.txt "$work_dir"
 
+# 复制其他配置文件
 cp -f mosdns/hosts.txt "$work_dir"
 cp -f mosdns/mosdns.yaml "$work_dir"
 
-if [[ ! -f /etc/systemd/system/mosdns.service ]]; then
-  cp mosdns/mosdns.service /etc/systemd/system/
+# 检查并启用 mosdns 服务
+service_file="/etc/systemd/system/mosdns.service"
+if [[ ! -f $service_file ]]; then
+  echo "安装 mosdns 服务..."
+  cp mosdns/mosdns.service "$service_file"
   systemctl daemon-reload
   systemctl enable mosdns
   systemctl start mosdns
 fi
 
-# 启动mosdns
-echo 'restart mosdns'
+# 重启 mosdns 服务
+echo '重启 mosdns 服务'
 systemctl restart mosdns
+
