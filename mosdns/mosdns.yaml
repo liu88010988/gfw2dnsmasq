@@ -1,27 +1,16 @@
 # https://github.com/IrineSistiana/mosdns/discussions/605
-# 一些解释：
-# 2.goto gfw-list是因为要执行多个exec，所以放到一个单独的序列中
-# 3.gfw-list序列中添加了ip判断，是因为之前出现过某个gfw域名解析出的ip竟然是127.0.0.1这种奇葩事件
-# 4.此配置已最优化访问所有网站，唯一的缺点是：有些直接通过ip访问（国外ip）的网站不会走代理，如果常用可以手动添加至ipset来解决，不使用ipset的话可以删除相关代码
-# 5.域名和ip均来自：https://github.com/Loyalsoldier/v2ray-rules-dat
+# 域名和ip均来自：https://github.com/Loyalsoldier/v2ray-rules-dat
 # hosts：自己定义的静态hosts
-# china_ip_list.txt：https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/cn.txt
+# china-ip-list.txt：https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/cn.txt
 # direct-list.txt：https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt
 # apple-cn.txt：https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/apple-cn.txt
 # proxy-list.txt：https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt
 
 log:
   level: info
-  file: "/var/log/mosdns.log"
+  file: "/etc/mosdns/mosdns.log"
 
 plugins:
-  # 缓存
-  - tag: cache
-    type: cache
-    args:
-      size: 10240
-      lazy_cache_ttl: 86400
-
   # 转发至国内DNS，并发查询
   - tag: forward_local
     type: forward
@@ -52,7 +41,7 @@ plugins:
     type: ip_set
     args:
       files:
-        - /etc/mosdns/china_ip_list.txt
+        - /etc/mosdns/china-ip-list.txt
 
   # fallback的primary服务器,返回非国内ip则drop_resp
   - tag: local_sequence
@@ -63,14 +52,13 @@ plugins:
         exec: accept
       - exec: drop_resp
 
-  # fallback的secondary服务器,返回非国内ip则添加至ipset,返回国内ip只接受不会添加ipset
+  # fallback的secondary服务器
   - tag: remote_sequence
     type: sequence
     args:
       - exec: $forward_remote
-      - matches: "!resp_ip $china_ip"
-        exec: ipset gfwlist,inet,24
-      - exec: accept
+      - matches: has_resp
+        exec: accept
 
   # fallback sequence
   - tag: fallback
@@ -81,15 +69,6 @@ plugins:
       threshold: 500
       always_standby: true
 
-  # gfwlist解析出的ip添加至ipset，添加前先判断是否为国内ip或内网ip
-  - tag: gfw-list
-    type: sequence
-    args:
-      - exec: ttl 300-3600
-      - matches: "!resp_ip $china_ip"
-        exec: ipset gfwlist,inet,24
-      - exec: accept
-
   # 主运行序列
   - tag: main_sequence
     type: sequence
@@ -97,17 +76,11 @@ plugins:
       - exec: $hosts
       - matches: has_resp
         exec: accept
-      
+
       - matches: qtype 65
         exec: reject 3
 
       - exec: prefer_ipv4
-
-      # 动态域名跳过缓存
-      - matches: "!qname 1024618.xyz"
-        exec: $cache
-      - matches: has_resp
-        exec: accept
 
       - matches: qname &/etc/mosdns/direct-list.txt &/etc/mosdns/apple-cn.txt
         exec: $forward_local
@@ -117,10 +90,9 @@ plugins:
       - matches: qname &/etc/mosdns/proxy-list.txt
         exec: $forward_remote
       - matches: has_resp
-        exec: goto gfw-list
+        exec: accept
 
       - exec: $fallback
-
 
   # 启动监听服务
   - tag: udp_server
