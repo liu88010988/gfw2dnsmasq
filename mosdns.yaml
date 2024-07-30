@@ -7,6 +7,7 @@
 # hosts：自己定义的静态hosts
 # china_ip_list.txt：https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/cn.txt
 # direct-list.txt：https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt
+# apple-cn.txt：https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/apple-cn.txt
 # proxy-list.txt：https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt
 
 log:
@@ -108,7 +109,7 @@ plugins:
       - matches: has_resp
         exec: accept
 
-      - matches: qname &/etc/mosdns/direct-list.txt
+      - matches: qname &/etc/mosdns/direct-list.txt &/etc/mosdns/apple-cn.txt
         exec: $forward_local
       - matches: has_resp
         exec: accept
