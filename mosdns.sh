@@ -19,7 +19,7 @@ cp -f domain/direct-list.txt "$work_dir"
 curl -L https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt -o domain/proxy-list.txt
 cp -f domain/proxy-list.txt "$work_dir"
 
-cp -f mosdns/hosts "$work_dir"
+cp -f mosdns/hosts.txt "$work_dir"
 cp -f mosdns/mosdns.yaml "$work_dir"
 
 script_name=$(basename "$0")

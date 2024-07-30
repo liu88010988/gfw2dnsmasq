@@ -1,6 +1,6 @@
 # https://github.com/IrineSistiana/mosdns/discussions/605
 # 域名和ip均来自：https://github.com/Loyalsoldier/v2ray-rules-dat
-# hosts：自己定义的静态hosts
+# hosts.txt：自己定义的静态hosts
 # geoip_cn.txt：https://github.com/Loyalsoldier/geoip/blob/release/text/cn.txt
 # direct-list.txt：https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/direct-list.txt
 # apple-cn.txt：https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/apple-cn.txt
@@ -34,7 +34,7 @@ plugins:
     type: hosts
     args:
       files:
-        - "/etc/mosdns/hosts"
+        - "/etc/mosdns/hosts.txt"
 
   # 国内域名
   - tag: geosite_cn
