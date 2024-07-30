@@ -6,7 +6,7 @@ if [ -z "$group" ]; then
 fi
 echo "use smartdns group $group"
 
-cp -f proxy-list.txt smartdns_proxy.conf
+cp -f domain/proxy-list.txt smartdns_proxy.conf
 sed -i 's/^/nameserver\ \//g' smartdns_proxy.conf
 sed -i "s/$/\/$group/g" smartdns_proxy.conf
 sed -i 's/full://g' smartdns_proxy.conf
