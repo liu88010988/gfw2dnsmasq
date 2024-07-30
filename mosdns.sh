@@ -28,6 +28,13 @@ cp -f domain/proxy-list.txt "$work_dir"
 cp -f mosdns/hosts.txt "$work_dir"
 cp -f mosdns/mosdns.yaml "$work_dir"
 
+if [[ ! -f /etc/systemd/system/mosdns.service ]]; then
+  cp mosdns/mosdns.service /etc/systemd/system/
+  systemctl daemon-reload
+  systemctl enable mosdns
+  systemctl start mosdns
+fi
+
 # 启动mosdns
 echo 'restart mosdns'
 systemctl restart mosdns
