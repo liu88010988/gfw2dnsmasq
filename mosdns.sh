@@ -30,4 +30,4 @@ cp -f mosdns/mosdns.yaml "$work_dir"
 
 # 启动mosdns
 echo 'restart mosdns'
-systemctl enable mosdns
+systemctl restart mosdns
