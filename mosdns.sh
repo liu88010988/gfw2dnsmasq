@@ -7,10 +7,18 @@ if [ ! -d "$work_dir" ]; then
 fi
 
 # 配置文件拷贝
+curl -L https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/cn.txt -o ip/geoip_cn.txt
 cp -f ip/geoip_cn.txt "$work_dir"
+
+curl -L https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/apple-cn.txt -o domain/apple-cn.txt
 cp -f domain/apple-cn.txt "$work_dir"
+
+curl -L https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt -o domain/direct-list.txt
 cp -f domain/direct-list.txt "$work_dir"
+
+curl -L https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt -o domain/proxy-list.txt
 cp -f domain/proxy-list.txt "$work_dir"
+
 cp -f mosdns/hosts "$work_dir"
 cp -f mosdns/mosdns.yaml "$work_dir"
 
