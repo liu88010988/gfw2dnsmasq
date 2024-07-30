@@ -29,7 +29,7 @@ cp -f mosdns/hosts.txt "$work_dir"
 cp -f mosdns/mosdns.yaml "$work_dir"
 
 script_name=$(basename "$0")
-pid=$(pgrep -f "mosdns" | grep -v "$script_name")
+pid=$(pgrep -f "mosdns.yaml" | grep -v "$script_name" | grep -v "grep")
 # 如果找到进程，则杀死它
 if [ -n "$pid" ]; then
   echo "killing existing mosdns PID: $pid"
@@ -38,5 +38,5 @@ if [ -n "$pid" ]; then
 fi
 
 # 启动mosdns
-cd "$work_dir"
-mosdns start -c mosdns.yaml -d "$work_dir"
+echo 'restart mosdns'
+systemctl enable mosdns
