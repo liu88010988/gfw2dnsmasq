@@ -1,14 +1,13 @@
 # https://github.com/IrineSistiana/mosdns/discussions/605
 # 一些解释：
-# 1.myvpsip.txt包含所有内网ip段和自己的vps地址，避免这些ip被添加至ipset
 # 2.goto gfw-list是因为要执行多个exec，所以放到一个单独的序列中
 # 3.gfw-list序列中添加了ip判断，是因为之前出现过某个gfw域名解析出的ip竟然是127.0.0.1这种奇葩事件
 # 4.此配置已最优化访问所有网站，唯一的缺点是：有些直接通过ip访问（国外ip）的网站不会走代理，如果常用可以手动添加至ipset来解决
 # 5.域名和ip均来自：https://github.com/Loyalsoldier/v2ray-rules-dat
-# china_ip_list：https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/cn.txt
-# 广告域名：https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/reject-list.txt
-# 直连域名：https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt
-# 代理域名：https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt
+# hosts：自己定义的静态hosts
+# china_ip_list.txt：https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/cn.txt
+# direct-list.txt：https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt
+# proxy-list.txt：https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt
 
 log:
   level: info
@@ -101,13 +100,10 @@ plugins:
       - matches: qtype 65
         exec: reject 3
 
-      - matches: qname &/etc/mosdns/reject-list.txt &/etc/mosdns/my-reject-list.txt
-        exec: reject
-
       - exec: prefer_ipv4
 
       # 动态域名跳过缓存
-      - matches: "!qname 00006801.com"
+      - matches: "!qname 1024618.xyz"
         exec: $cache
       - matches: has_resp
         exec: accept
