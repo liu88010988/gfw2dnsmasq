@@ -31,4 +31,3 @@ fi
 cp -f smartdns/smartdns_gfwlist.conf /etc/smartdns/smartdns_gfwlist.conf
 echo "重启 SmartDNS 服务..."
 systemctl restart smartdns
-

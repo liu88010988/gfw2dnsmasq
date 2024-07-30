@@ -18,7 +18,10 @@ declare -A files=(
 for url in "${!files[@]}"; do
   local_path="${files[$url]}"
   echo "正在下载 $url 到 $local_path"
-  curl -s -L "$url" -o "$local_path" || { echo "下载失败: $url"; exit 1; }
+  curl -s -L "$url" -o "$local_path" || {
+    echo "下载失败: $url"
+    exit 1
+  }
   cp -f "$local_path" "$work_dir"
 done
 
@@ -49,4 +52,3 @@ fi
 # 重启 mosdns 服务
 echo '重启 mosdns 服务'
 systemctl restart mosdns
-
