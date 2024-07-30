@@ -7,8 +7,8 @@ fi
 echo "use smartdns group $group"
 
 # 生成并处理dnsmasq_gfwlist.conf
-sh dnsmasq_gfwlist.sh -o dnsmasq_gfwlist.conf
-cp -f dnsmasq_gfwlist.conf smartdns/smartdns_gfwlist.conf
+sh dnsmasq_gfwlist.sh -o smartdns/dnsmasq_gfwlist.conf
+cp -f smartdns/dnsmasq_gfwlist.conf smartdns/smartdns_gfwlist.conf
 sed -i 's/server=/nameserver\ /g' smartdns/smartdns_gfwlist.conf
 sed -i "s/127.0.0.1#5353/$group/g" smartdns/smartdns_gfwlist.conf
 
