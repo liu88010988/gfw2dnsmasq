@@ -7,11 +7,11 @@ if [ ! -d "$work_dir" ]; then
 fi
 
 # 配置文件拷贝
-cp -f mosdns/apple-cn.txt "$work_dir"
-cp -f mosdns/geoip_cn.txt "$work_dir"
-cp -f mosdns/direct-list.txt "$work_dir"
+cp -f apple-cn.txt "$work_dir"
+cp -f geoip_cn.txt "$work_dir"
+cp -f direct-list.txt "$work_dir"
 cp -f mosdns/hosts "$work_dir"
-cp -f mosdns/proxy-list.txt "$work_dir"
+cp -f proxy-list.txt "$work_dir"
 cp -f mosdns/mosdns.yaml "$work_dir"
 
 script_name=$(basename "$0")
