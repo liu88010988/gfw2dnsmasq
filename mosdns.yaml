@@ -1,0 +1,139 @@
+# https://github.com/IrineSistiana/mosdns/discussions/605
+# 一些解释：
+# 1.myvpsip.txt包含所有内网ip段和自己的vps地址，避免这些ip被添加至ipset
+# 2.goto gfw-list是因为要执行多个exec，所以放到一个单独的序列中
+# 3.gfw-list序列中添加了ip判断，是因为之前出现过某个gfw域名解析出的ip竟然是127.0.0.1这种奇葩事件
+# 4.此配置已最优化访问所有网站，唯一的缺点是：有些直接通过ip访问（国外ip）的网站不会走代理，如果常用可以手动添加至ipset来解决
+# 5.域名和ip均来自：https://github.com/Loyalsoldier/v2ray-rules-dat
+# china_ip_list：https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/cn.txt
+# 广告域名：https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/reject-list.txt
+# 直连域名：https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt
+# 代理域名：https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt
+
+log:
+  level: info
+  file: "/var/log/mosdns.log"
+
+plugins:
+  # 缓存
+  - tag: cache
+    type: cache
+    args:
+      size: 10240
+      lazy_cache_ttl: 86400
+
+  # 转发至国内DNS，并发查询
+  - tag: forward_local
+    type: forward
+    args:
+      concurrent: 2
+      upstreams:
+        - addr: udp://119.29.29.29
+        - addr: udp://223.5.5.5
+
+  # 转发至国外DNS，并发查询
+  - tag: forward_remote
+    type: forward
+    args:
+      concurrent: 2
+      upstreams:
+        - addr: tcp://8.8.8.8
+        - addr: tcp://1.1.1.1
+
+  # 自定义hosts
+  - tag: hosts
+    type: hosts
+    args:
+      files:
+        - "/etc/mosdns/hosts"
+
+  # china ip
+  - tag: china_ip
+    type: ip_set
+    args:
+      files:
+        - /etc/mosdns/china_ip_list.txt
+
+  # fallback的primary服务器,返回非国内ip则drop_resp
+  - tag: local_sequence
+    type: sequence
+    args:
+      - exec: $forward_local
+      - matches: "resp_ip $china_ip"
+        exec: accept
+      - exec: drop_resp
+
+  # fallback的secondary服务器,返回非国内ip则添加至ipset,返回国内ip只接受不会添加ipset
+  - tag: remote_sequence
+    type: sequence
+    args:
+      - exec: $forward_remote
+      - matches: "!resp_ip $china_ip"
+        exec: ipset gfwlist,inet,24
+      - exec: accept
+
+  # fallback sequence
+  - tag: fallback
+    type: fallback
+    args:
+      primary: local_sequence
+      secondary: remote_sequence
+      threshold: 500
+      always_standby: true
+
+  # gfwlist解析出的ip添加至ipset，添加前先判断是否为国内ip或内网ip
+  - tag: gfw-list
+    type: sequence
+    args:
+      - exec: ttl 300-3600
+      - matches: "!resp_ip $china_ip"
+        exec: ipset gfwlist,inet,24
+      - exec: accept
+
+  # 主运行序列
+  - tag: main_sequence
+    type: sequence
+    args:
+      - exec: $hosts
+      - matches: has_resp
+        exec: accept
+      
+      - matches: qtype 65
+        exec: reject 3
+
+      - matches: qname &/etc/mosdns/reject-list.txt &/etc/mosdns/my-reject-list.txt
+        exec: reject
+
+      - exec: prefer_ipv4
+
+      # 动态域名跳过缓存
+      - matches: "!qname 00006801.com"
+        exec: $cache
+      - matches: has_resp
+        exec: accept
+
+      - matches: qname &/etc/mosdns/direct-list.txt
+        exec: $forward_local
+      - matches: has_resp
+        exec: accept
+
+      - matches: qname &/etc/mosdns/proxy-list.txt
+        exec: $forward_remote
+      - matches: has_resp
+        exec: goto gfw-list
+
+      - exec: $fallback
+
+
+  # 启动监听服务
+  - tag: udp_server
+    type: udp_server
+    args:
+      entry: main_sequence
+      listen: :53
+
+  - tag: tcp_server
+    type: tcp_server
+    args:
+      entry: main_sequence
+      listen: :53
