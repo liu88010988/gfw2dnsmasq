@@ -8,7 +8,7 @@ fi
 
 # 配置文件拷贝
 cp -f mosdns/apple-cn.txt "$work_dir"
-cp -f mosdns/china-ip-list.txt "$work_dir"
+cp -f mosdns/geoip_cn.txt "$work_dir"
 cp -f mosdns/direct-list.txt "$work_dir"
 cp -f mosdns/hosts "$work_dir"
 cp -f mosdns/proxy-list.txt "$work_dir"

@@ -1,10 +1,10 @@
 # https://github.com/IrineSistiana/mosdns/discussions/605
 # 域名和ip均来自：https://github.com/Loyalsoldier/v2ray-rules-dat
 # hosts：自己定义的静态hosts
-# china-ip-list.txt：https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/cn.txt
-# direct-list.txt：https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt
+# geoip_cn.txt：https://github.com/Loyalsoldier/geoip/blob/release/text/cn.txt
+# direct-list.txt：https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/direct-list.txt
 # apple-cn.txt：https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/apple-cn.txt
-# proxy-list.txt：https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt
+# proxy-list.txt：https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/proxy-list.txt
 
 log:
   level: info
@@ -53,7 +53,7 @@ plugins:
     type: ip_set
     args:
       files:
-        - "/etc/mosdns/china-ip-list.txt"
+        - "/etc/mosdns/geoip_cn.txt"
 
   # 国外域名
   - tag: geosite_no_cn
@@ -67,7 +67,7 @@ plugins:
     type: sequence
     args:
       - exec: $forward_local
-      - matches: "!resp_ip geoip_cn"
+      - matches: "!resp_ip $geoip_cn"
         exec: drop_resp
 
   # fallback的secondary服务器
