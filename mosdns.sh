@@ -14,12 +14,12 @@ declare -A files=(
   ["https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt"]="domain/proxy-list.txt"
 )
 
-# 下载并复制配置文件
+# 更新并复制配置文件
 for url in "${!files[@]}"; do
   local_path="${files[$url]}"
-  echo "正在下载 $url 到 $local_path"
+  echo "正在更新 $url 到 $local_path"
   curl -s -L "$url" -o "$local_path" || {
-    echo "下载失败: $url"
+    echo "更新失败: $url"
     exit 1
   }
   cp -f "$local_path" "$work_dir"

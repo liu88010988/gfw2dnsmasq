@@ -4,8 +4,8 @@
 group=${1:-gfwlist}
 echo "使用 SmartDNS 组：$group"
 
-# 下载 proxy-list.txt 文件
-echo "下载代理列表..."
+# 更新 proxy-list.txt 文件
+echo "更新代理列表..."
 curl -s -L https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt -o domain/proxy-list.txt
 
 # 删除排除的域名
