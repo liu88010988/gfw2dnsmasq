@@ -29,7 +29,7 @@ sh mosdns.sh
 
 | 文件名                | 描述                        |
 |--------------------|---------------------------|
-| exclude_domain.txt | 追加非国外代理域名列表               |
+| exclude_domain.txt | 国外代理域名列表中排除的域名            |
 | apple-cn.txt       | mosdns中国内域名对于apple域名的补充列表 |
 | direct-list.txt    | mosdns中定义的国内域名列表          |
 | proxy-list.txt     | mosdns中定义的国外代理域名列表        |
