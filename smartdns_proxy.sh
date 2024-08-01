@@ -7,14 +7,6 @@ echo "使用 SmartDNS 组：$group"
 # 更新 proxy-list.txt 文件
 ./update-data.sh
 
-# 删除排除的域名
-if [[ -f domain/exclude_domain.txt ]]; then
-  echo "删除排除的域名..."
-  while IFS= read -r exclude || [[ -n "$exclude" ]]; do
-    sed -i "/$exclude/d" domain/proxy-list.txt
-  done <domain/exclude_domain.txt
-fi
-
 # 处理并生成 smartdns_proxy.conf
 echo "生成 SmartDNS 配置..."
 cp -f domain/proxy-list.txt smartdns/smartdns_proxy.conf

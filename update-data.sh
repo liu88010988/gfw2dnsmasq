@@ -13,6 +13,10 @@ direct_list_path="domain/direct-list.txt"
 proxy_list_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt"
 proxy_list_path="domain/proxy-list.txt"
 
+dnsmasq_gfwlist_file="smartdns/dnsmasq_gfwlist.conf"
+additional_file="domain/additional_domain.txt"
+exclude_file="domain/exclude_domain.txt"
+
 # 下载文件并处理错误的函数
 download_file() {
   local url=$1
@@ -29,6 +33,22 @@ download_file "$geoip_cn_url" "$geoip_cn_path"
 download_file "$apple_cn_url" "$apple_cn_path"
 download_file "$direct_list_url" "$direct_list_path"
 download_file "$proxy_list_url" "$proxy_list_path"
-
 echo "正在更新 dnsmasq_gfwlist"
-sh dnsmasq_gfwlist.sh -o smartdns/dnsmasq_gfwlist.conf >/dev/null 2>&1
+sh dnsmasq_gfwlist.sh -o "$dnsmasq_gfwlist_file" >/dev/null 2>&1
+
+# 添加额外的域名
+if [[ -f "$additional_file" ]]; then
+  echo "添加额外的域名..."
+  while IFS= read -r additional || [[ -n "$additional" ]]; do
+    echo "server=/$additional/127.0.0.1#5353" >>"$dnsmasq_gfwlist_file"
+  done <"$additional_file"
+fi
+
+# 删除排除的域名
+if [[ -f "$exclude_file" ]]; then
+  echo "删除排除的域名..."
+  while IFS= read -r exclude || [[ -n "$exclude" ]]; do
+    sed -i "/$exclude/d" "$proxy_list_path"
+    sed -i "/$exclude/d" "$dnsmasq_gfwlist_file"
+  done <"$exclude_file"
+fi

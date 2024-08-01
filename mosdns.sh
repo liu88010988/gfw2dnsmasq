@@ -9,16 +9,10 @@ mkdir -p "$work_dir"
 # 更新并复制配置文件
 ./update-data.sh
 
-# 删除排除的域名
-exclude_file="domain/exclude_domain.txt"
-if [[ -f $exclude_file ]]; then
-  echo "删除排除的域名..."
-  while IFS= read -r exclude || [[ -n "$exclude" ]]; do
-    sed -i "/$exclude/d" "domain/proxy-list.txt"
-  done <"$exclude_file"
-  cp -f "domain/proxy-list.txt" "$work_dir"
-fi
-
+cp -f ip/geoip_cn.txt "$work_dir"
+cp -f domain/apple-cn.txt "$work_dir"
+cp -f domain/direct-list.txt "$work_dir"
+cp -f domain/proxy-list.txt "$work_dir"
 # 复制其他配置文件
 cp -f mosdns/hosts.txt "$work_dir"
 cp -f mosdns/mosdns.yaml "$work_dir"
