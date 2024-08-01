@@ -34,4 +34,4 @@ curl -s -L "$proxy_list_url" -o "$proxy_list_path" || {
 }
 
 echo "正在下载 dnsmasq_gfwlist"
-sh dnsmasq_gfwlist.sh -o smartdns/dnsmasq_gfwlist.conf
+sh dnsmasq_gfwlist.sh -o smartdns/dnsmasq_gfwlist.conf >/dev/null 2>&1
