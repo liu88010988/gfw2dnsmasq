@@ -19,7 +19,7 @@ sh smartdns_proxy.sh $group_name
 
 ```
 
-## 四.转换成mosdnss格式
+## 四.转换成mosdns格式
 
 ```sh
 sh mosdns.sh
