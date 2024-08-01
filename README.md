@@ -27,17 +27,19 @@ sh mosdns.sh
 
 ## 五.domain文件夹说明
 
-| 文件名                | 描述                        |
-|--------------------|---------------------------|
-| exclude_domain.txt | 国外代理域名列表中排除的域名            |
-| apple-cn.txt       | mosdns中国内域名对于apple域名的补充列表 |
-| direct-list.txt    | mosdns中定义的国内域名列表          |
-| proxy-list.txt     | mosdns中定义的国外代理域名列表        |
+| 文件名                | 描述             |
+|--------------------|----------------|
+| exclude_domain.txt | 国外代理域名列表中排除的域名 |
+| apple-cn.txt       | apple国内域名列表    |
+| direct-list.txt    | 国内域名列表         |
+| proxy-list.txt     | 国外代理域名列表       |
+| google-cn.txt      | google国内域名列表   |
 
 ## 六.ip文件夹说明
 
-| 文件名          | 描述               |
-|--------------|------------------|
-| geoip_cn.txt | mosdns中定义的国内ip列表 |
+| 文件名          | 描述     |
+|--------------|--------|
+| geoip_cn.txt | 国内ip列表 |
+| private.txt  | 内网ip列表 |
 
 ## 七.该项目仅为个人测试使用，如有侵权请联系，会及时调整
