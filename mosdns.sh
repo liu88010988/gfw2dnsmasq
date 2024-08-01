@@ -10,6 +10,7 @@ mkdir -p "$work_dir"
 ./update-data.sh
 
 cp -f ip/geoip_cn.txt "$work_dir"
+cp -f ip/private.txt "$work_dir"
 cp -f domain/apple-cn.txt "$work_dir"
 cp -f domain/direct-list.txt "$work_dir"
 cp -f domain/proxy-list.txt "$work_dir"

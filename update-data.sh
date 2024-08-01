@@ -4,6 +4,9 @@
 geoip_cn_url="https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/cn.txt"
 geoip_cn_path="ip/geoip_cn.txt"
 
+private_url="https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/private.txt"
+private_path="ip/private.txt"
+
 apple_cn_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/apple-cn.txt"
 apple_cn_path="domain/apple-cn.txt"
 
@@ -29,6 +32,7 @@ download_file() {
 
 # 下载文件
 download_file "$geoip_cn_url" "$geoip_cn_path"
+download_file "$private_url" "$private_path"
 download_file "$apple_cn_url" "$apple_cn_path"
 download_file "$direct_list_url" "$direct_list_path"
 download_file "$proxy_list_url" "$proxy_list_path"
