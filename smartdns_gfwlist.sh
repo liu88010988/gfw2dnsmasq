@@ -5,8 +5,7 @@ group=${1:-gfwlist}
 echo "使用 SmartDNS 组：$group"
 
 # 生成并处理 dnsmasq_gfwlist.conf
-echo "正在更新 dnsmasq_gfwlist"
-sh dnsmasq_gfwlist.sh -o smartdns/dnsmasq_gfwlist.conf >/dev/null 2>&1
+./update-data.sh
 cp -f smartdns/dnsmasq_gfwlist.conf smartdns/smartdns_gfwlist.conf
 
 # 替换配置文件中的字段

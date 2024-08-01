@@ -5,8 +5,7 @@ group=${1:-gfwlist}
 echo "使用 SmartDNS 组：$group"
 
 # 更新 proxy-list.txt 文件
-echo "更新代理列表..."
-curl -s -L https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt -o domain/proxy-list.txt
+./update-data.sh
 
 # 删除排除的域名
 if [[ -f domain/exclude_domain.txt ]]; then

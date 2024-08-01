@@ -6,24 +6,8 @@ work_dir="/etc/mosdns"
 # 创建工作目录（如果不存在）
 mkdir -p "$work_dir"
 
-# 配置文件的URL和本地路径
-declare -A files=(
-  ["https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/cn.txt"]="ip/geoip_cn.txt"
-  ["https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/apple-cn.txt"]="domain/apple-cn.txt"
-  ["https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt"]="domain/direct-list.txt"
-  ["https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt"]="domain/proxy-list.txt"
-)
-
 # 更新并复制配置文件
-for url in "${!files[@]}"; do
-  local_path="${files[$url]}"
-  echo "正在更新 $url 到 $local_path"
-  curl -s -L "$url" -o "$local_path" || {
-    echo "更新失败: $url"
-    exit 1
-  }
-  cp -f "$local_path" "$work_dir"
-done
+./update-data.sh
 
 # 删除排除的域名
 exclude_file="domain/exclude_domain.txt"
