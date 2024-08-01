@@ -10,6 +10,9 @@ private_path="ip/private.txt"
 apple_cn_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/apple-cn.txt"
 apple_cn_path="domain/apple-cn.txt"
 
+google_cn_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/google-cn.txt"
+google_cn_path="domain/google-cn.txt"
+
 direct_list_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt"
 direct_list_path="domain/direct-list.txt"
 
@@ -34,6 +37,7 @@ download_file() {
 download_file "$geoip_cn_url" "$geoip_cn_path"
 download_file "$private_url" "$private_path"
 download_file "$apple_cn_url" "$apple_cn_path"
+download_file "$google_cn_url" "$google_cn_path"
 download_file "$direct_list_url" "$direct_list_path"
 download_file "$proxy_list_url" "$proxy_list_path"
 echo "正在更新 dnsmasq_gfwlist"

@@ -5,6 +5,7 @@
 # private.txt：https://github.com/Loyalsoldier/geoip/blob/release/text/private.txt
 # direct-list.txt：https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/direct-list.txt
 # apple-cn.txt：https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/apple-cn.txt
+# google-cn.txt：https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/google-cn.txt
 # proxy-list.txt：https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/proxy-list.txt
 
 log:
@@ -47,6 +48,7 @@ plugins:
       files:
         - "/etc/mosdns/direct-list.txt"
         - "/etc/mosdns/apple-cn.txt"
+        - "/etc/mosdns/google-cn.txt"
 
   # 国内ip
   - tag: geoip_cn

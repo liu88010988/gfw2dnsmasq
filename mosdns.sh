@@ -12,6 +12,7 @@ mkdir -p "$work_dir"
 cp -f ip/geoip_cn.txt "$work_dir"
 cp -f ip/private.txt "$work_dir"
 cp -f domain/apple-cn.txt "$work_dir"
+cp -f domain/google-cn.txt "$work_dir"
 cp -f domain/direct-list.txt "$work_dir"
 cp -f domain/proxy-list.txt "$work_dir"
 # 复制其他配置文件
