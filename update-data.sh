@@ -1,6 +1,12 @@
 #!/bin/bash
 
 # URLs 和文件路径
+geoip_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geoip.dat"
+geoip_path="ip/geoip.dat"
+
+geosite_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geosite.dat"
+geosite_path="domain/geosite.dat"
+
 geoip_cn_url="https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/cn.txt"
 geoip_cn_path="ip/geoip_cn.txt"
 
@@ -34,6 +40,8 @@ download_file() {
 }
 
 # 下载文件
+download_file "$geoip_url" "$geoip_path"
+download_file "$geosite_url" "$geosite_path"
 download_file "$geoip_cn_url" "$geoip_cn_path"
 download_file "$private_url" "$private_path"
 download_file "$apple_cn_url" "$apple_cn_path"
