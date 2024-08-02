@@ -7,9 +7,7 @@ domain_dir="$work_dir/domain"
 hosts_dir="$work_dir/hosts"
 
 # 创建工作目录（如果不存在）
-mkdir -p "$ip_dir"
-mkdir -p "$domain_dir"
-mkdir -p "$hosts_dir"
+mkdir -p "$ip_dir" "$domain_dir" "$hosts_dir"
 
 # 更新并复制配置文件
 ./update-data.sh
