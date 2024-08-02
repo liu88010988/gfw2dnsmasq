@@ -3,7 +3,7 @@
 ## 一.转换成dnsmasq格式
 
 ```sh
-cd dnsmasq && sh dnsmasq_gfwlist.sh -o dnsmasq_gfwlist.conf
+cd dnsmasq && sh dnsmasq_gfwlist.sh -o dnsmasq_gfwlist.conf >/dev/null 2>&1
 ```
 
 ## 二.转换成smartdns格式，后面传入smartdns的国外解析分组名，不传默认为gfwlist
