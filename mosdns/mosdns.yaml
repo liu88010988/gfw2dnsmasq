@@ -1,6 +1,5 @@
 # https://github.com/IrineSistiana/mosdns/discussions/605
 # 域名和ip均来自：https://github.com/Loyalsoldier/v2ray-rules-dat
-# hosts.txt：自己定义的静态hosts
 
 log:
   level: info
