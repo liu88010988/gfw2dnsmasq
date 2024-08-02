@@ -1,32 +1,23 @@
 #!/bin/bash
 
 # URLs 和文件路径
+ip_path="ip"
+domain_path="domain"
+
 geoip_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geoip.dat"
-geoip_path="ip/geoip.dat"
+geoip_path="$ip_path/geoip.dat"
 
 geosite_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geosite.dat"
-geosite_path="domain/geosite.dat"
-
-geoip_cn_url="https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/cn.txt"
-geoip_cn_path="ip/geoip_cn.txt"
-
-private_url="https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/private.txt"
-private_path="ip/private.txt"
+geosite_path="$domain_path/geosite.dat"
 
 apple_cn_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/apple-cn.txt"
-apple_cn_path="domain/apple-cn.txt"
+apple_cn_path="$domain_path/apple-cn.txt"
 
 google_cn_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/google-cn.txt"
-google_cn_path="domain/google-cn.txt"
-
-direct_list_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt"
-direct_list_path="domain/direct-list.txt"
-
-proxy_list_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt"
-proxy_list_path="domain/proxy-list.txt"
+google_cn_path="$domain_path/google-cn.txt"
 
 dnsmasq_gfwlist_file="smartdns/dnsmasq_gfwlist.conf"
-exclude_file="domain/exclude_domain.txt"
+exclude_file="$domain_path/exclude_domain.txt"
 
 # 下载文件并处理错误的函数
 download_file() {
@@ -42,20 +33,21 @@ download_file() {
 # 下载文件
 download_file "$geoip_url" "$geoip_path"
 download_file "$geosite_url" "$geosite_path"
-download_file "$geoip_cn_url" "$geoip_cn_path"
-download_file "$private_url" "$private_path"
+./v2dat unpack geoip -o "$ip_path" -f cn -f private "$geoip_path"
+./v2dat unpack geosite -o "$domain_path" -f gfw -f cn -f 'geolocation-!cn' "$geosite_path"
 download_file "$apple_cn_url" "$apple_cn_path"
 download_file "$google_cn_url" "$google_cn_path"
-download_file "$direct_list_url" "$direct_list_path"
-download_file "$proxy_list_url" "$proxy_list_path"
 echo "正在更新 dnsmasq_gfwlist"
-sh dnsmasq_gfwlist.sh -o "$dnsmasq_gfwlist_file" >/dev/null 2>&1
+cp -f domain/geosite_gfw.txt "$dnsmasq_gfwlist_file"
+sed -i -e 's/^/server=\//' \
+  -e "s/$/\/127.0.0.1#5353/" "$dnsmasq_gfwlist_file"
+#sh dnsmasq_gfwlist.sh -o "$dnsmasq_gfwlist_file" >/dev/null 2>&1
 
 # 删除排除的域名
 if [[ -f "$exclude_file" ]]; then
   echo "删除排除的域名..."
   while IFS= read -r exclude || [[ -n "$exclude" ]]; do
-    sed -i "/$exclude/d" "$proxy_list_path"
+    sed -i "/$exclude/d" domain/geosite_geolocation-!cn.txt
     sed -i "/$exclude/d" "$dnsmasq_gfwlist_file"
   done <"$exclude_file"
 fi
