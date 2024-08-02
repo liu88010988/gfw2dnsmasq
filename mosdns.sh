@@ -21,6 +21,7 @@ cp -f "domain/geosite_private.txt" "$domain_dir"
 cp -f "domain/geosite_geolocation-!cn.txt" "$domain_dir"
 cp -f "domain/geosite_tld-cn.txt" "$domain_dir"
 cp -f "domain/geosite_category-games@cn.txt" "$domain_dir"
+cp -f "domain/cdn_domain_list.txt" "$domain_dir"
 # 复制其他配置文件
 cp -f "hosts/hosts.txt" "$hosts_dir"
 cp -f "mosdns/mosdns.yaml" "$work_dir"
