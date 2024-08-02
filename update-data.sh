@@ -39,8 +39,8 @@ download_file() {
 # 下载文件
 download_file "$geoip_url" "$geoip_path"
 download_file "$geosite_url" "$geosite_path"
-./v2dat unpack geoip -o "$ip_path" -f cn -f private "$geoip_path"
-./v2dat unpack geosite -o "$domain_path" -f gfw -f cn -f 'geolocation-!cn' "$geosite_path"
+./v2dat-linux unpack geoip -o "$ip_path" -f cn -f private "$geoip_path"
+./v2dat-linux unpack geosite -o "$domain_path" -f gfw -f cn -f 'geolocation-!cn' "$geosite_path"
 download_file "$apple_cn_url" "$apple_cn_path"
 download_file "$google_cn_url" "$google_cn_path"
 #sh dnsmasq_gfwlist.sh -o "$dnsmasq_gfwlist_file" >/dev/null 2>&1
