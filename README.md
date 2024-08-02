@@ -26,15 +26,18 @@ sh mosdns.sh
 
 ## 五.domain文件夹说明
 
-| 文件名                         | 描述             |
-|-----------------------------|----------------|
-| apple-cn.txt                | apple国内域名列表    |
-| exclude_domain.txt          | 国外代理域名列表中排除的域名 |
-| geosite.dat                 | geosite全量原始数据  |
-| geosite_cn.txt              | 国内域名列表         |
-| geosite_geolocation-!cn.txt | 国外代理域名列表       |
-| geosite_gfw.txt             | gwf域名列表        |
-| google-cn.txt               | google国内域名列表   |
+| 文件名                           | 描述             |
+|-------------------------------|----------------|
+| exclude_domain.txt            | 国外代理域名列表中排除的域名 |
+| geosite.dat                   | geosite全量原始数据  |
+| geosite_apple-cn.txt          | 国内apple域名列表    |
+| geosite_category-games@cn.txt | 国内steam域名列表    |
+| geosite_cn.txt                | 国内域名列表         |
+| geosite_geolocation-!cn.txt   | 国外代理域名列表       |
+| geosite_gfw.txt               | 国外gwf域名列表      |
+| geosite_google-cn.txt         | 国内google域名列表   |
+| geosite_private.txt           | 国内私有域名列表       |
+| geosite_tld-cn.txt            | 国内私有域名列表       |
 
 ## 六.hosts文件夹说明
 
@@ -48,6 +51,6 @@ sh mosdns.sh
 |-------------------|-------------|
 | geoip.dat         | geoip全量原始数据 |
 | geoip_cn.txt      | 国内ip列表      |
-| geoip_private.txt | 内网ip列表      |
+| geoip_private.txt | 私有ip列表      |
 
 ## 八.该项目仅为个人测试使用，如有侵权请联系，会及时调整
