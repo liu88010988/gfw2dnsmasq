@@ -1,8 +1,6 @@
 # https://github.com/IrineSistiana/mosdns/discussions/605
 # 域名和ip均来自：https://github.com/Loyalsoldier/v2ray-rules-dat
 # hosts.txt：自己定义的静态hosts
-# apple-cn.txt：https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/apple-cn.txt
-# google-cn.txt：https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/google-cn.txt
 
 log:
   level: info
@@ -43,8 +41,11 @@ plugins:
         - "arpa"
       files:
         - "/etc/mosdns/domain/geosite_cn.txt"
-        - "/etc/mosdns/domain/apple-cn.txt"
-        - "/etc/mosdns/domain/google-cn.txt"
+        - "/etc/mosdns/domain/geosite_apple-cn.txt"
+        - "/etc/mosdns/domain/geosite_google-cn.txt"
+        - "/etc/mosdns/domain/geosite_private.txt"
+        - "/etc/mosdns/domain/geosite_tld-cn.txt"
+        - "/etc/mosdns/domain/geosite_category-games@cn.txt"
 
   # 国内ip
   - tag: geoip_cn

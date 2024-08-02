@@ -17,10 +17,6 @@ geoip_url="$base_url/geoip.dat"
 geoip_path="$ip_path/geoip.dat"
 geosite_url="$base_url/geosite.dat"
 geosite_path="$domain_path/geosite.dat"
-apple_cn_url="$base_url/apple-cn.txt"
-apple_cn_path="$domain_path/apple-cn.txt"
-google_cn_url="$base_url/google-cn.txt"
-google_cn_path="$domain_path/google-cn.txt"
 geosite_no_cn_file="$domain_path/geosite_geolocation-!cn.txt"
 geosite_gfw_file="$domain_path/geosite_gfw.txt"
 dnsmasq_gfwlist_file="$dnsmasq_path/dnsmasq_gfwlist.conf"
@@ -43,9 +39,7 @@ download_file() {
 download_file "$geoip_url" "$geoip_path"
 download_file "$geosite_url" "$geosite_path"
 ./v2dat-"$system" unpack geoip -o "$ip_path" -f cn -f private "$geoip_path"
-./v2dat-"$system" unpack geosite -o "$domain_path" -f gfw -f cn -f 'geolocation-!cn' "$geosite_path"
-download_file "$apple_cn_url" "$apple_cn_path"
-download_file "$google_cn_url" "$google_cn_path"
+./v2dat-"$system" unpack geosite -o "$domain_path" -f 'apple-cn' -f 'google-cn' -f 'private' -f 'tld-cn' -f 'category-games@cn' -f 'gfw' -f 'cn' -f 'geolocation-!cn' "$geosite_path"
 #sh dnsmasq_gfwlist.sh -o "$dnsmasq_gfwlist_file" >/dev/null 2>&1
 
 # 删除排除的域名
