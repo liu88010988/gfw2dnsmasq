@@ -4,7 +4,7 @@
 group=${1:-gfwlist}
 echo "使用 SmartDNS 组：$group"
 
-# 生成并处理 dnsmasq_gfwlist.conf
+echo "生成 SmartDNS 配置..."
 ./update-data.sh "$group"
 
 # 更新 SmartDNS 配置并重启服务
