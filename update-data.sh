@@ -1,8 +1,10 @@
 #!/bin/bash
 
+group=${1:-gfwlist}
 # URLs 和文件路径
 ip_path="ip"
 domain_path="domain"
+smartdns_path="smartdns"
 
 geoip_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geoip.dat"
 geoip_path="$ip_path/geoip.dat"
@@ -16,7 +18,11 @@ apple_cn_path="$domain_path/apple-cn.txt"
 google_cn_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/google-cn.txt"
 google_cn_path="$domain_path/google-cn.txt"
 
-dnsmasq_gfwlist_file="smartdns/dnsmasq_gfwlist.conf"
+geosite_no_cn_file="$domain_path/geosite_geolocation-!cn.txt"
+geosite_gfw_file="$domain_path/geosite_gfw.txt"
+dnsmasq_gfwlist_file="$smartdns_path/dnsmasq_gfwlist.conf"
+smartdns_gfwlist_file="$smartdns_path/smartdns_gfwlist.conf"
+smartdns_proxy_file="$smartdns_path/smartdns_proxy.conf"
 exclude_file="$domain_path/exclude_domain.txt"
 
 # 下载文件并处理错误的函数
@@ -43,12 +49,23 @@ download_file "$google_cn_url" "$google_cn_path"
 if [[ -f "$exclude_file" ]]; then
   echo "删除排除的域名..."
   while IFS= read -r exclude || [[ -n "$exclude" ]]; do
-    sed -i "/$exclude/d" "$domain_path/geosite_geolocation-!cn.txt"
-    sed -i "/$exclude/d" "$domain_path/geosite_gfw.txt"
+    sed -i "/$exclude/d" "$geosite_no_cn_file"
+    sed -i "/$exclude/d" "$geosite_gfw_file"
   done <"$exclude_file"
 fi
 
-echo "正在更新 dnsmasq_gfwlist"
-cp -f "$domain_path/geosite_gfw.txt" "$dnsmasq_gfwlist_file"
+echo "正在更新 smartdns_proxy.conf"
+cp -f "$geosite_no_cn_file" "$smartdns_proxy_file"
+sed -i -e 's/^/nameserver\ \//' \
+  -e "s/$/\/$group/" \
+  -e 's/full://g' \
+  -e "/regexp:/d" "$smartdns_proxy_file"
+
+echo "正在更新 dnsmasq_gfwlist.conf"
+cp -f "$geosite_gfw_file" "$dnsmasq_gfwlist_file"
 sed -i -e 's/^/server=\//' \
   -e "s/$/\/127.0.0.1#5353/" "$dnsmasq_gfwlist_file"
+
+echo "正在更新 smartdns_gfwlist.conf"
+cp -f "$dnsmasq_gfwlist_file" "$smartdns_gfwlist_file"
+sed -i -e 's/server=/nameserver\ /g' -e "s/127.0.0.1#5353/$group/g" "$smartdns_gfwlist_file"
