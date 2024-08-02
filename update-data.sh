@@ -1,7 +1,12 @@
 #!/bin/bash
 
-system=${1:-linux}
-group=${2:-gfwlist}
+group=${1:-gfwlist}
+system="linux"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  system="mac"
+fi
+echo "system $system"
+
 # URLs 和文件路径
 ip_path="ip"
 domain_path="domain"

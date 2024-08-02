@@ -1,6 +1,5 @@
 #!/bin/bash
 
-system=${1:-linux}
 # 定义工作目录
 work_dir="/etc/mosdns"
 
@@ -8,7 +7,7 @@ work_dir="/etc/mosdns"
 mkdir -p "$work_dir"
 
 # 更新并复制配置文件
-./update-data.sh "$system"
+./update-data.sh
 
 cp -f ip/geoip_cn.txt "$work_dir"
 cp -f ip/geoip_private.txt "$work_dir"
