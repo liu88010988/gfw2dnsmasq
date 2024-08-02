@@ -31,7 +31,7 @@ plugins:
     type: hosts
     args:
       files:
-        - "/etc/mosdns/hosts.txt"
+        - "/etc/mosdns/hosts/hosts.txt"
 
   # 国内域名
   - tag: geosite_cn
@@ -42,24 +42,24 @@ plugins:
         - "local"
         - "arpa"
       files:
-        - "/etc/mosdns/geosite_cn.txt"
-        - "/etc/mosdns/apple-cn.txt"
-        - "/etc/mosdns/google-cn.txt"
+        - "/etc/mosdns/domain/geosite_cn.txt"
+        - "/etc/mosdns/domain/apple-cn.txt"
+        - "/etc/mosdns/domain/google-cn.txt"
 
   # 国内ip
   - tag: geoip_cn
     type: ip_set
     args:
       files:
-        - "/etc/mosdns/geoip_cn.txt"
-        - "/etc/mosdns/geoip_private.txt"
+        - "/etc/mosdns/ip/geoip_cn.txt"
+        - "/etc/mosdns/ip/geoip_private.txt"
 
   # 国外域名
   - tag: geosite_no_cn
     type: domain_set
     args:
       files:
-        - "/etc/mosdns/geosite_geolocation-!cn.txt"
+        - "/etc/mosdns/domain/geosite_geolocation-!cn.txt"
 
   # fallback的primary服务器,返回非国内ip则drop_resp
   - tag: local_sequence

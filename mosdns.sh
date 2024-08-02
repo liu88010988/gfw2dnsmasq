@@ -2,21 +2,26 @@
 
 # 定义工作目录
 work_dir="/etc/mosdns"
+ip_dir="$work_dir/ip"
+domain_dir="$work_dir/domain"
+hosts_dir="$work_dir/hosts"
 
 # 创建工作目录（如果不存在）
-mkdir -p "$work_dir"
+mkdir -p "$ip_dir"
+mkdir -p "$domain_dir"
+mkdir -p "$hosts_dir"
 
 # 更新并复制配置文件
 ./update-data.sh
 
-cp -f ip/geoip_cn.txt "$work_dir"
-cp -f ip/geoip_private.txt "$work_dir"
-cp -f domain/apple-cn.txt "$work_dir"
-cp -f domain/google-cn.txt "$work_dir"
-cp -f domain/geosite_cn.txt "$work_dir"
-cp -f domain/geosite_geolocation-!cn.txt "$work_dir"
+cp -f ip/geoip_cn.txt "$ip_dir"
+cp -f ip/geoip_private.txt "$ip_dir"
+cp -f domain/apple-cn.txt "$domain_dir"
+cp -f domain/google-cn.txt "$domain_dir"
+cp -f domain/geosite_cn.txt "$domain_dir"
+cp -f domain/geosite_geolocation-!cn.txt "$domain_dir"
 # 复制其他配置文件
-cp -f mosdns/hosts.txt "$work_dir"
+cp -f hosts/hosts.txt "$hosts_dir"
 cp -f mosdns/mosdns.yaml "$work_dir"
 
 # 检查并启用 mosdns 服务
