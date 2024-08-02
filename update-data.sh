@@ -37,17 +37,18 @@ download_file "$geosite_url" "$geosite_path"
 ./v2dat unpack geosite -o "$domain_path" -f gfw -f cn -f 'geolocation-!cn' "$geosite_path"
 download_file "$apple_cn_url" "$apple_cn_path"
 download_file "$google_cn_url" "$google_cn_path"
-echo "正在更新 dnsmasq_gfwlist"
-cp -f domain/geosite_gfw.txt "$dnsmasq_gfwlist_file"
-sed -i -e 's/^/server=\//' \
-  -e "s/$/\/127.0.0.1#5353/" "$dnsmasq_gfwlist_file"
 #sh dnsmasq_gfwlist.sh -o "$dnsmasq_gfwlist_file" >/dev/null 2>&1
 
 # 删除排除的域名
 if [[ -f "$exclude_file" ]]; then
   echo "删除排除的域名..."
   while IFS= read -r exclude || [[ -n "$exclude" ]]; do
-    sed -i "/$exclude/d" domain/geosite_geolocation-!cn.txt
-    sed -i "/$exclude/d" "$dnsmasq_gfwlist_file"
+    sed -i "/$exclude/d" "$domain_path/geosite_geolocation-!cn.txt"
+    sed -i "/$exclude/d" "$domain_path/geosite_gfw.txt"
   done <"$exclude_file"
 fi
+
+echo "正在更新 dnsmasq_gfwlist"
+cp -f "$domain_path/geosite_gfw.txt" "$dnsmasq_gfwlist_file"
+sed -i -e 's/^/server=\//' \
+  -e "s/$/\/127.0.0.1#5353/" "$dnsmasq_gfwlist_file"
