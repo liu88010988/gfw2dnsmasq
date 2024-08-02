@@ -8,7 +8,6 @@ echo "生成 SmartDNS 配置..."
 ./update-data.sh "$group"
 
 # 更新 SmartDNS 配置并重启服务
-cp -f "smartdns/smartdns_proxy.conf" "/etc/smartdns/smartdns_proxy.conf"
-cp -f "smartdns/smartdns_gfwlist.conf" "/etc/smartdns/smartdns_gfwlist.conf"
+cp -f smartdns/smartdns_proxy.conf smartdns/smartdns_gfwlist.conf /etc/smartdns/
 echo "重启 SmartDNS 服务..."
 systemctl restart smartdns
