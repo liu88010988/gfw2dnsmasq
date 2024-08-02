@@ -2,11 +2,10 @@
 # 域名和ip均来自：https://github.com/Loyalsoldier/v2ray-rules-dat
 # hosts.txt：自己定义的静态hosts
 # geoip_cn.txt：https://github.com/Loyalsoldier/geoip/blob/release/text/cn.txt
-# private.txt：https://github.com/Loyalsoldier/geoip/blob/release/text/private.txt
+# geoip_private.txt：https://github.com/Loyalsoldier/geoip/blob/release/text/private.txt
 # direct-list.txt：https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/direct-list.txt
 # apple-cn.txt：https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/apple-cn.txt
 # google-cn.txt：https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/google-cn.txt
-# proxy-list.txt：https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/proxy-list.txt
 
 log:
   level: info
@@ -56,14 +55,14 @@ plugins:
     args:
       files:
         - "/etc/mosdns/geoip_cn.txt"
-        - "/etc/mosdns/private.txt"
+        - "/etc/mosdns/geoip_private.txt"
 
   # 国外域名
   - tag: geosite_no_cn
     type: domain_set
     args:
       files:
-        - "/etc/mosdns/proxy-list.txt"
+        - "/etc/mosdns/geosite_geolocation-!cn.txt"
 
   # fallback的primary服务器,返回非国内ip则drop_resp
   - tag: local_sequence
