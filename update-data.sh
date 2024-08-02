@@ -63,5 +63,6 @@ sed -i -e 's/^/server=\//' \
   -e "s/$/\/127.0.0.1#5353/" "$dnsmasq_gfwlist_file"
 
 echo "正在更新 smartdns_gfwlist.conf"
-cp -f "$dnsmasq_gfwlist_file" "$smartdns_gfwlist_file"
-sed -i -e 's/server=/nameserver\ /g' -e "s/127.0.0.1#5353/$group/g" "$smartdns_gfwlist_file"
+cp -f "$geosite_gfw_file" "$smartdns_gfwlist_file"
+sed -i -e 's/^/nameserver\ \//' \
+  -e "s/$/\/$group/" "$smartdns_gfwlist_file"
