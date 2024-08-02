@@ -5,17 +5,18 @@ group=${1:-gfwlist}
 ip_path="ip"
 domain_path="domain"
 smartdns_path="smartdns"
+base_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release"
 
-geoip_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geoip.dat"
+geoip_url="$base_url/geoip.dat"
 geoip_path="$ip_path/geoip.dat"
 
-geosite_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geosite.dat"
+geosite_url="$base_url/geosite.dat"
 geosite_path="$domain_path/geosite.dat"
 
-apple_cn_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/apple-cn.txt"
+apple_cn_url="$base_url/apple-cn.txt"
 apple_cn_path="$domain_path/apple-cn.txt"
 
-google_cn_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/google-cn.txt"
+google_cn_url="$base_url/google-cn.txt"
 google_cn_path="$domain_path/google-cn.txt"
 
 geosite_no_cn_file="$domain_path/geosite_geolocation-!cn.txt"
