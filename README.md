@@ -31,7 +31,7 @@ sh mosdns.sh
 |-----------------------------|----------------|
 | exclude_domain.txt          | 国外代理域名列表中排除的域名 |
 | apple-cn.txt                | apple国内域名列表    |
-| direct-list.txt             | 国内域名列表         |
+| geosite_cn.txt              | 国内域名列表         |
 | geosite_geolocation-!cn.txt | 国外代理域名列表       |
 | google-cn.txt               | google国内域名列表   |
 

@@ -13,7 +13,7 @@ cp -f ip/geoip_cn.txt "$work_dir"
 cp -f ip/geoip_private.txt "$work_dir"
 cp -f domain/apple-cn.txt "$work_dir"
 cp -f domain/google-cn.txt "$work_dir"
-cp -f domain/direct-list.txt "$work_dir"
+cp -f domain/geosite_cn.txt "$work_dir"
 cp -f domain/geosite_geolocation-!cn.txt "$work_dir"
 # 复制其他配置文件
 cp -f mosdns/hosts.txt "$work_dir"

@@ -3,7 +3,6 @@
 # hosts.txt：自己定义的静态hosts
 # geoip_cn.txt：https://github.com/Loyalsoldier/geoip/blob/release/text/cn.txt
 # geoip_private.txt：https://github.com/Loyalsoldier/geoip/blob/release/text/private.txt
-# direct-list.txt：https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/direct-list.txt
 # apple-cn.txt：https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/apple-cn.txt
 # google-cn.txt：https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/google-cn.txt
 
@@ -45,7 +44,7 @@ plugins:
         - "local"
         - "arpa"
       files:
-        - "/etc/mosdns/direct-list.txt"
+        - "/etc/mosdns/geosite_cn.txt"
         - "/etc/mosdns/apple-cn.txt"
         - "/etc/mosdns/google-cn.txt"
 
