@@ -1,16 +1,11 @@
 #!/bin/bash
 
-if [ -z "$1" ]; then
-  echo "Usage: $0 <daily_log>"
-  exit 1
-fi
-daily_log=$1
-group=${2:-gfwlist}
+group=${1:-gfwlist}
 system="linux"
 if [[ "$OSTYPE" == "darwin"* ]]; then
   system="mac"
 fi
-echo "$(date '+%Y-%m-%d %H:%M:%S') 更新dns基础数据开始 system $system..." >>"$daily_log"
+echo "$(date '+%Y-%m-%d %H:%M:%S') 更新dns基础数据开始 system $system..."
 
 # URLs 和文件路径
 ip_path="ip"
@@ -35,9 +30,9 @@ cdn_path="$domain_path/cdn_domain_list.txt"
 download_file() {
   local url=$1
   local path=$2
-  echo "$(date '+%Y-%m-%d %H:%M:%S') 正在更新 $url 到 $path..." >>"$daily_log"
+  echo "$(date '+%Y-%m-%d %H:%M:%S') 正在更新 $url 到 $path..."
   if ! curl -s -L "$url" -o "$path"; then
-    echo "$(date '+%Y-%m-%d %H:%M:%S') 更新失败: $url..." >>"$daily_log"
+    echo "$(date '+%Y-%m-%d %H:%M:%S') 更新失败: $url..."
     exit 1
   fi
 }
@@ -51,27 +46,27 @@ download_file "$cdn_url" "$cdn_path"
 
 # 删除排除的域名
 if [[ -f "$exclude_file" ]]; then
-  echo "$(date '+%Y-%m-%d %H:%M:%S') 删除排除的域名..." >>"$daily_log"
+  echo "$(date '+%Y-%m-%d %H:%M:%S') 删除排除的域名..."
   while IFS= read -r exclude || [[ -n "$exclude" ]]; do
     sed -i "/$exclude/d" "$geosite_no_cn_file"
     sed -i "/$exclude/d" "$geosite_gfw_file"
   done <"$exclude_file"
 fi
 
-echo "$(date '+%Y-%m-%d %H:%M:%S') 正在更新 smartdns_proxy.conf..." >>"$daily_log"
+echo "$(date '+%Y-%m-%d %H:%M:%S') 正在更新 smartdns_proxy.conf..."
 cp -f "$geosite_no_cn_file" "$smartdns_proxy_file"
 sed -i -e 's/^/nameserver\ \//' \
   -e "s/$/\/$group/" \
   -e 's/full://g' \
   -e "/regexp:/d" "$smartdns_proxy_file"
 
-echo "$(date '+%Y-%m-%d %H:%M:%S') 正在更新 dnsmasq_gfwlist.conf..." >>"$daily_log"
+echo "$(date '+%Y-%m-%d %H:%M:%S') 正在更新 dnsmasq_gfwlist.conf..."
 cp -f "$geosite_gfw_file" "$dnsmasq_gfwlist_file"
 sed -i -e 's/^/server=\//' \
   -e "s/$/\/127.0.0.1#5353/" "$dnsmasq_gfwlist_file"
 
-echo "$(date '+%Y-%m-%d %H:%M:%S') 正在更新 smartdns_gfwlist.conf..." >>"$daily_log"
+echo "$(date '+%Y-%m-%d %H:%M:%S') 正在更新 smartdns_gfwlist.conf..."
 cp -f "$geosite_gfw_file" "$smartdns_gfwlist_file"
 sed -i -e 's/^/nameserver\ \//' \
   -e "s/$/\/$group/" "$smartdns_gfwlist_file"
-echo "$(date '+%Y-%m-%d %H:%M:%S') 更新dns基础数据完成 system $system..." >>"$daily_log"
+echo "$(date '+%Y-%m-%d %H:%M:%S') 更新dns基础数据完成 system $system..."
