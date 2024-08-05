@@ -11,7 +11,7 @@ daily_log="$work_dir/daily.log"
 mkdir -p "$ip_dir" "$domain_dir" "$hosts_dir"
 touch $daily_log
 
-echo "开始更新并重启MosDNS服务...$(date)" >>"$daily_log"
+echo "$(date '+%Y-%m-%d %H:%M:%S') 开始更新并重启MosDNS服务..." >>"$daily_log"
 # 更新并复制配置文件
 bash update-data.sh $daily_log
 
@@ -26,7 +26,7 @@ cp -f mosdns/mosdns.yaml "$work_dir"
 # 检查并启用 mosdns 服务
 service_file="/etc/systemd/system/mosdns.service"
 if [[ ! -f $service_file ]]; then
-  echo "安装MosDNS服务...$(date)" >>"$daily_log"
+  echo "$(date '+%Y-%m-%d %H:%M:%S') 安装MosDNS服务..." >>"$daily_log"
   cp mosdns/mosdns.service "$service_file"
   systemctl daemon-reload
   systemctl enable mosdns
@@ -34,6 +34,6 @@ if [[ ! -f $service_file ]]; then
 fi
 
 # 重启 mosdns 服务
-echo "重启MosDNS服务...$(date)" >>"$daily_log"
+echo "$(date '+%Y-%m-%d %H:%M:%S') 重启MosDNS服务..." >>"$daily_log"
 systemctl restart mosdns
-echo "更新并重启MosDNS服务完成...$(date)" >>"$daily_log"
+echo "$(date '+%Y-%m-%d %H:%M:%S') 更新并重启MosDNS服务完成..." >>"$daily_log"
