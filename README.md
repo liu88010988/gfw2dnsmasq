@@ -9,13 +9,13 @@ cd dnsmasq && sh dnsmasq_gfwlist.sh -o dnsmasq_gfwlist.conf >/dev/null 2>&1
 ## 二.转换成smartdns格式，后面传入smartdns的国外解析分组名，不传默认为gfwlist
 
 ```sh
-sh smartdns.sh $group_name
+bash smartdns.sh $group_name
 ```
 
 ## 三.转换成mosdns格式
 
 ```sh
-sh mosdns.sh
+bash mosdns.sh
 ```
 
 ## 四.dnsmasq文件夹说明

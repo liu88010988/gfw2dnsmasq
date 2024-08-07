@@ -12,7 +12,7 @@ print_msg() {
 mkdir -p "$work_dir"
 
 print_msg "开始更新并重启SmartDNS服务,使用SmartDNS组:$group"
-bash update-data.sh "$group"
+bash update-geo.sh "$group"
 
 # 更新 SmartDNS 配置并重启服务
 cp -f smartdns/smartdns_proxy.conf smartdns/smartdns_gfwlist.conf "$work_dir"

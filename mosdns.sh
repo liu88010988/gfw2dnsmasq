@@ -16,7 +16,7 @@ mkdir -p "$ip_dir" "$domain_dir" "$hosts_dir"
 
 print_msg "开始更新并重启MosDNS服务"
 # 更新并复制配置文件
-bash update-data.sh
+bash update-geo.sh
 
 cp -f ip/geoip_cn.txt ip/geoip_private.txt "$ip_dir"
 cp -f domain/geosite_apple-cn.txt domain/geosite_google-cn.txt domain/geosite_cn.txt \
