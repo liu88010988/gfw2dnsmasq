@@ -2,11 +2,12 @@
 
 group=${1:-gfwlist}
 # URLs 和文件路径
+base_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release"
+cdn_url="https://raw.githubusercontent.com/pmkol/easymosdns/main/rules/cdn_domain_list.txt"
 ip_path="ip"
 domain_path="domain"
 smartdns_path="smartdns"
 dnsmasq_path="dnsmasq"
-base_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release"
 geoip_url="$base_url/geoip.dat"
 geoip_path="$ip_path/geoip.dat"
 geosite_url="$base_url/geosite.dat"
@@ -17,7 +18,6 @@ dnsmasq_gfwlist_file="$dnsmasq_path/dnsmasq_gfwlist.conf"
 smartdns_gfwlist_file="$smartdns_path/smartdns_gfwlist.conf"
 smartdns_proxy_file="$smartdns_path/smartdns_proxy.conf"
 exclude_file="$domain_path/exclude_domain.txt"
-cdn_url="https://raw.githubusercontent.com/pmkol/easymosdns/main/rules/cdn_domain_list.txt"
 cdn_path="$domain_path/cdn_domain_list.txt"
 
 print_msg() {
