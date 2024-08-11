@@ -21,8 +21,7 @@ bash update-geo.sh
 cp -f ip/geoip_cn.txt ip/geoip_private.txt "$ip_dir"
 cp -f domain/geosite_apple-cn.txt domain/geosite_google-cn.txt domain/geosite_cn.txt \
   domain/geosite_private.txt domain/geosite_geolocation-!cn.txt \
-  domain/geosite_tld-cn.txt domain/geosite_category-games@cn.txt \
-  domain/cdn_domain_list.txt "$domain_dir"
+  domain/geosite_tld-cn.txt domain/geosite_category-games@cn.txt "$domain_dir"
 cp -f hosts/hosts.txt "$hosts_dir"
 cp -f mosdns/mosdns.yaml "$work_dir"
 

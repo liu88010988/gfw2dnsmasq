@@ -1,6 +1,5 @@
 # https://github.com/IrineSistiana/mosdns/discussions/605
 # 域名和ip均来自：https://github.com/Loyalsoldier/v2ray-rules-dat
-# cdn_domain_list.txt：https://raw.githubusercontent.com/pmkol/easymosdns/main/rules/cdn_domain_list.txt
 
 log:
   level: info
@@ -46,7 +45,6 @@ plugins:
         - "/etc/mosdns/domain/geosite_private.txt"
         - "/etc/mosdns/domain/geosite_tld-cn.txt"
         - "/etc/mosdns/domain/geosite_category-games@cn.txt"
-        - "/etc/mosdns/domain/cdn_domain_list.txt"
 
   # 国内ip
   - tag: geoip_cn

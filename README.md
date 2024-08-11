@@ -28,7 +28,6 @@ bash mosdns.sh
 
 | 文件名                                                                                                                            | 描述             |
 |--------------------------------------------------------------------------------------------------------------------------------|----------------|
-| [cdn_domain_list.txt](https://github.com/liu88010988/gfw2dnsmasq/blob/master/domain/cdn_domain_list.txt)                       | cdn域名列表        |
 | [exclude_domain.txt](https://github.com/liu88010988/gfw2dnsmasq/blob/master/domain/exclude_domain.txt)                         | 国外代理域名列表中排除的域名 |
 | [geosite.dat](https://github.com/liu88010988/gfw2dnsmasq/blob/master/domain/geosite.dat)                                       | geosite全量原始数据  |
 | [geosite_apple-cn.txt](https://github.com/liu88010988/gfw2dnsmasq/blob/master/domain/geosite_apple-cn.txt)                     | 国内apple域名列表    |

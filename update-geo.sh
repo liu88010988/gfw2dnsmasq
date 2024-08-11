@@ -14,10 +14,8 @@ dnsmasq_gfwlist_file="$dnsmasq_path/dnsmasq_gfwlist.conf"
 smartdns_gfwlist_file="$smartdns_path/smartdns_gfwlist.conf"
 smartdns_proxy_file="$smartdns_path/smartdns_proxy.conf"
 exclude_file="$domain_path/exclude_domain.txt"
-cdn_path="$domain_path/cdn_domain_list.txt"
 # URLs
 base_url="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release"
-cdn_url="https://raw.githubusercontent.com/pmkol/easymosdns/main/rules/cdn_domain_list.txt"
 geoip_url="$base_url/geoip.dat"
 geosite_url="$base_url/geosite.dat"
 
@@ -46,7 +44,6 @@ print_msg "更新dns基础数据开始 system $system"
 # 下载文件
 download_file "$geoip_url" "$geoip_path"
 download_file "$geosite_url" "$geosite_path"
-download_file "$cdn_url" "$cdn_path"
 ./v2dat-"$system" unpack geoip -o "$ip_path" -f 'telegram' -f 'cn' -f 'private' "$geoip_path"
 ./v2dat-"$system" unpack geosite -o "$domain_path" -f 'category-ads-all' -f 'apple-cn' -f 'google-cn' -f 'private' -f 'tld-cn' -f 'category-games@cn' -f 'gfw' -f 'cn' -f 'geolocation-!cn' "$geosite_path"
 
